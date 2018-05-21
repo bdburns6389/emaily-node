@@ -8,4 +8,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
  //Gives port for Heroku to apply PORT, or uses 5000 for development
-app.listen(proccess.env.PORT || 5000);
+app.listen(PORT);
