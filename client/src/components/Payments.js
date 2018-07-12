@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { connect } from "react-redux";
 import * as actions from "../actions";
+import * as keys from "../../../config/prod";
 class Payments extends Component {
   render() {
     return (
@@ -12,7 +13,7 @@ class Payments extends Component {
         shippingAddress={true} //Find way to add this to database
         billingAddress={true}
         token={token => this.props.handleToken(token)}
-        stripeKey={process.env.REACT_APP_STRIPE_KEY}
+        stripeKey={keys.reactStripePublishableKey}
       >
         <button className="btn" style={{ background: "cyan", color: "black" }}>
           Add Credits
