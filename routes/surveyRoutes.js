@@ -7,9 +7,15 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = mongoose.model("surveys");
 
 module.exports = app => {
-  app.post("/api/surveys", requireLogin, requireCredits, (req, res) => {
+  app.get("/api/surveys/thanks", (req, res) => {
+    res.send("Thanks for voting!");
+  });
+
+  app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
     const { title, subject, body, recipients } = req.body;
 
+    // TODO Allow user to define custom URL to redirect to after user
+    // TODO clicks yes or no
     const survey = new Survey({
       title, //can also be title: title //es6 allows shortening for simplicity
       subject,
@@ -19,7 +25,18 @@ module.exports = app => {
       dateSent: Date.now()
     });
 
-    // TODO Great place to send an email!
+    // Great place to send an email!
     const mailer = new Mailer(survey, surveyTemplate(survey));
+
+    try {
+      await mailer.send();
+      await survey.save();
+      req.user.credits -= 1;
+      const user = await req.user.save();
+
+      res.send(user);
+    } catch (err) {
+      res.status(422).send(err);
+    }
   });
 };
