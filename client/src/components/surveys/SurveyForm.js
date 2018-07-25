@@ -2,13 +2,30 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
+import { Link } from "react-router-dom";
 import SurveyField from "./SurveyField";
 
 const FIELDS = [
-  { label: "Survey Title", name: "title" },
-  { label: "Subject Line", name: "subject" },
-  { label: "Email Body", name: "body" },
-  { label: "Recipient List", name: "emails" }
+  {
+    label: "Survey Title",
+    name: "title",
+    noValueError: "You must provide a title"
+  },
+  {
+    label: "Subject Line",
+    name: "subject",
+    noValueError: "You must provide a subject"
+  },
+  {
+    label: "Email Body",
+    name: "body",
+    noValueError: "You must provide a body"
+  },
+  {
+    label: "Recipient List",
+    name: "emails",
+    noValueError: "You must provide Emails"
+  }
 ];
 
 class SurveyForm extends Component {
@@ -31,12 +48,12 @@ class SurveyForm extends Component {
       <div>
         <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
           {this.renderFields()}
-          <button
-            style={{ color: "white" }}
-            className="deep-purple darken-4"
-            type="submit"
-          >
-            Submit
+          <Link to="/surveys" className="red btn-flat white-text">
+            Cancel
+          </Link>
+          <button className="cyan btn-flat right white-text" type="submit">
+            Next
+            <i className="material-icons right">done</i>
           </button>
         </form>
       </div>
@@ -44,6 +61,22 @@ class SurveyForm extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {};
+
+  _.each(FIELDS, ({ name, noValueError }) => {
+    if (!values[name]) {
+      errors[name] = noValueError;
+    }
+    // else if (values[name].length < 8) {
+    // errors[name] = "Type more";
+    //}
+  });
+
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: "surveyForm"
 })(SurveyForm);

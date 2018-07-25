@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <div className="container">
         <BrowserRouter>
-          <div>
+          <div className="container">
             {/*exact={true} can be just exact with no parameter*/}
             <Header />
             <Route exact={true} path="/" component={Landing} />
