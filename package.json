@@ -13,7 +13,7 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "webhook": "forever sendgrid_webhook.js"
+    "webhook": "ngrok http 5000"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "localtunnel": "^1.9.0",
     "lodash": "^4.17.10",
     "mongoose": "^5.2.3",
+    "ngrok": "^3.0.1",
     "nodemon": "^1.18.1",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
