@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const Path = require("path-parser").default; // TODO .default may not be necessary
+const Path = require("path-parser"); // TODO .default may not be necessary
 const { URL } = require("url");
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
